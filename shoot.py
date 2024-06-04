@@ -146,4 +146,12 @@ def main_game(difficulty):
         # 프레임 설정 및 디스플레이
         pygame.display.flip()
         clock.tick(60)
-    
+        
+# 메인 게임 루프
+while True:
+    difficulty = difficulty_selection()
+    main_game(difficulty)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
