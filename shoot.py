@@ -20,3 +20,10 @@ pointer_image = pygame.transform.scale(pointer_image, (23, 23))
 
 # 마우스 포인터를 숨기기
 pygame.mouse.set_visible(False)
+
+# 난이도 설정
+difficulty_levels = {
+    'easy': {'spawn_interval': 2000, 'min_lifetime': 2000, 'max_lifetime': 4000},
+    'medium': {'spawn_interval': 1000, 'min_lifetime': 1000, 'max_lifetime': 2000},
+    'hard': {'spawn_interval': 500, 'min_lifetime': 500, 'max_lifetime': 1000}
+}
