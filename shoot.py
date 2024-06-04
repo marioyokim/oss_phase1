@@ -27,3 +27,21 @@ difficulty_levels = {
     'medium': {'spawn_interval': 1000, 'min_lifetime': 1000, 'max_lifetime': 2000},
     'hard': {'spawn_interval': 500, 'min_lifetime': 500, 'max_lifetime': 1000}
 }
+
+# 표적 클래스 정의
+class Target:
+    def __init__(self, x, y, size):
+        settings = difficulty_levels[difficulty]
+        self.image = pygame.transform.scale(target_image, (size, size))
+        self.rect = self.image.get_rect(center=(x, y))
+        self.size = size
+        self.creation_time = pygame.time.get_ticks()
+        self.lifetime = random.randint(settings['min_lifetime'], settings['max_lifetime'])
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+    def is_clicked(self, mouse_pos):
+        return self.rect.collidepoint(mouse_pos)
+    
+    
