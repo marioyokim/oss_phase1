@@ -147,6 +147,12 @@ def main_game(difficulty):
         pygame.display.flip()
         clock.tick(60)
         
+    # 게임 종료 후 점수 표시
+    screen.fill(WHITE)
+    display_message(f'Game Over! Your Score: {score}', (225, 300), font_size=48)
+    pygame.display.flip()
+    pygame.time.wait(3000)
+        
 # 메인 게임 루프
 while True:
     difficulty = difficulty_selection()
