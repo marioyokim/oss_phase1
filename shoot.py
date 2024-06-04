@@ -81,5 +81,69 @@ def difficulty_selection():
                     selected_difficulty = 'hard'
     return selected_difficulty
 
+# 메인 게임
+def main_game(difficulty):
 
+    targets = []
+    score = 0
+    last_spawn_time = pygame.time.get_ticks()
+    spawn_interval = difficulty_levels[difficulty]['spawn_interval']
+
+    # 제한 시간 설정 (초)
+    game_duration = 30
+    start_time = pygame.time.get_ticks()
+    end_time = start_time + game_duration * 1000
+
+    # 게임 루프
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # 마우스 왼쪽 클릭
+                hit = False
+                for target in targets:
+                    if target.is_clicked(event.pos):
+                        targets.remove(target)
+                        score += 1
+                        hit = True
+                        break
+
+        # 화면 업데이트
+        screen.fill(WHITE)
+        
+        # 새로운 표적 생성
+        current_time = pygame.time.get_ticks()
+        if current_time - last_spawn_time > spawn_interval:
+            x, y = random.randint(50, 850), random.randint(50, 650)
+            size = random.randint(20, 50)
+            targets.append(Target(x, y, size))
+            last_spawn_time = current_time
+
+        # 표적 그리기 및 제거
+        for target in targets[:]:
+            target.draw(screen)
+            if current_time - target.creation_time > target.lifetime:  # 랜덤 수명 후에 사라짐
+                targets.remove(target)
+                score -= 1  # 클릭하지 않으면 점수 감소
+
+        # 제한 시간 체크
+        remaining_time = (end_time - current_time) // 1000
+        if remaining_time <= 0:
+            running = False
+
+        # 점수 및 남은 시간 표시
+        font = pygame.font.SysFont(None, 36)
+        score_text = font.render(f'Score: {score}', True, BLACK)
+        screen.blit(score_text, (10, 10))
+        time_text = font.render(f'Time: {remaining_time}', True, BLACK)
+        screen.blit(time_text, (800, 10))
+
+        # 마우스 포인터
+        mouse_pos = pygame.mouse.get_pos()
+        screen.blit(pointer_image, (mouse_pos[0] - pointer_image.get_width() / 2, mouse_pos[1] - pointer_image.get_height() / 2))
+
+        # 프레임 설정 및 디스플레이
+        pygame.display.flip()
+        clock.tick(60)
     
