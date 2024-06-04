@@ -50,5 +50,36 @@ def display_message(message, position, font_size=48):
     text = font.render(message, True, BLACK)
     screen.blit(text, position)
     
+# 제목, 난이도 버튼
+def difficulty_selection():  
+    selected_difficulty = None
+    while selected_difficulty is None:
+        screen.fill(WHITE)
+        display_message('AimLab', (355, 100), font_size=72) 
+        display_message('Select Difficulty:', (310, 250)) 
+        easy_button = pygame.Rect(290, 320, 200, 50) 
+        normal_button = pygame.Rect(290, 390, 200, 50)  
+        hard_button = pygame.Rect(290, 460, 200, 50)  
+
+        display_message('Easy', (395, 330))  
+        display_message('Normal', (395, 400))  
+        display_message('Hard', (395, 470))  
+
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                if easy_button.collidepoint(mouse_pos):
+                    selected_difficulty = 'easy'
+                elif normal_button.collidepoint(mouse_pos):
+                    selected_difficulty = 'medium'
+                elif hard_button.collidepoint(mouse_pos):
+                    selected_difficulty = 'hard'
+    return selected_difficulty
+
 
     
