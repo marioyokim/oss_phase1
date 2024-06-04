@@ -44,4 +44,11 @@ class Target:
     def is_clicked(self, mouse_pos):
         return self.rect.collidepoint(mouse_pos)
     
+# 폰트, 텍스트 설정
+def display_message(message, position, font_size=48):
+    font = pygame.font.SysFont(None, font_size)
+    text = font.render(message, True, BLACK)
+    screen.blit(text, position)
+    
+
     
